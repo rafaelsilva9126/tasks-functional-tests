@@ -1,5 +1,7 @@
 package br.ce.wcaquino.tasks.functional;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -7,21 +9,25 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 
 public class TasksTest {
 
-	public WebDriver acessarAplicação() {
-		System.setProperty("webdriver.chrome.driver", ("C:\\Users\\Rafa\\Desktop\\drivers\\chromedriver.exe"));
-		WebDriver driver = new ChromeDriver();
-		driver.navigate().to("http://localhost:8006/tasks/");
+	public WebDriver acessarAplicação() throws MalformedURLException {
+		DesiredCapabilities cap = DesiredCapabilities.chrome();
+		//System.setProperty("webdriver.chrome.driver", ("C:\\Users\\Rafa\\Desktop\\drivers\\chromedriver.exe"));
+		//WebDriver driver = new ChromeDriver();
+		WebDriver driver = new RemoteWebDriver(new URL("http://192.168.1.77:4444/wd/hub"), cap);
+		driver.navigate().to("http://192.168.1.77:8006/tasks/");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		return driver;
 
 	}
 
 	@Test
-	public void deveSalvarTarefaComSucesso() throws InterruptedException {
+	public void deveSalvarTarefaComSucesso() throws InterruptedException, MalformedURLException {
 		WebDriver driver = acessarAplicação();
 		try {
 			driver.findElement(By.id("addTodo")).click();
@@ -38,7 +44,7 @@ public class TasksTest {
 	}
 
 	@Test
-	public void naoDeveSalvarTarefa() throws InterruptedException {
+	public void naoDeveSalvarTarefa() throws InterruptedException, MalformedURLException {
 		WebDriver driver = acessarAplicação();
 		try {
 			driver.findElement(By.id("addTodo")).click();
@@ -56,7 +62,7 @@ public class TasksTest {
 	}
 	
 	@Test
-	public void naoDeveSalvarTarefaSemData() throws InterruptedException {
+	public void naoDeveSalvarTarefaSemData() throws InterruptedException, MalformedURLException {
 		WebDriver driver = acessarAplicação();
 		try {
 			driver.findElement(By.id("addTodo")).click();
@@ -72,7 +78,7 @@ public class TasksTest {
 
 	}
 	@Test
-	public void deveSalvarTarefaSemDescricao() throws InterruptedException {
+	public void deveSalvarTarefaSemDescricao() throws InterruptedException, MalformedURLException {
 		WebDriver driver = acessarAplicação();
 		try {
 			driver.findElement(By.id("addTodo")).click();
