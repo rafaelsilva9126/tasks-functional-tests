@@ -19,8 +19,8 @@ public class TasksTest {
 		DesiredCapabilities cap = DesiredCapabilities.chrome();
 		//System.setProperty("webdriver.chrome.driver", ("C:\\Users\\Rafa\\Desktop\\drivers\\chromedriver.exe"));
 		//WebDriver driver = new ChromeDriver();
-		WebDriver driver = new RemoteWebDriver(new URL("http://192.168.1.77:4444/wd/hub"), cap);
-		driver.navigate().to("http://192.168.1.77:8006/tasks/");
+		WebDriver driver = new RemoteWebDriver(new URL("http://192.168.15.10:4444/wd/hub"), cap);
+		driver.navigate().to("http://192.168.15.10:8001/tasks/");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		return driver;
 
@@ -32,10 +32,10 @@ public class TasksTest {
 		try {
 			driver.findElement(By.id("addTodo")).click();
 			driver.findElement(By.id("task")).sendKeys("Teste Rafael 2");
-			driver.findElement(By.id("dueDate")).sendKeys("27/06/2021");
+			driver.findElement(By.id("dueDate")).sendKeys("27/05/2022");
 			driver.findElement(By.id("saveButton")).click();
 			String msg = driver.findElement(By.id("message")).getText();
-			Assert.assertEquals("Sucess!", msg);
+			Assert.assertEquals("Success!", msg);
 		} finally {
 			driver.close();
 			driver.quit();
@@ -82,7 +82,7 @@ public class TasksTest {
 		WebDriver driver = acessarAplicação();
 		try {
 			driver.findElement(By.id("addTodo")).click();
-			driver.findElement(By.id("dueDate")).sendKeys("27/06/2021");
+			driver.findElement(By.id("dueDate")).sendKeys("27/07/2021");
 			driver.findElement(By.id("saveButton")).click();
 			String msg = driver.findElement(By.id("message")).getText();
 			Assert.assertEquals("Fill the task description", msg);
